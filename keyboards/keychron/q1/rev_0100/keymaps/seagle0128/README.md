@@ -15,7 +15,7 @@ This keymap builds on the keymap by Mike Killewald (mikekillewald) and Grayson C
 - Dynamic Fn layer RGB indicator
     - When the Fn key is held down, any keys defined on the Fn layer in this firmware or in VIA will be highlighted with the following options:
         - #define FN_LAYER_COLOR [color] in config.h to set a static color for defined keys (default: orange)
-        - Fn+C will toggle turning off RGB for keys with no definition (default: RGB off)
+        - Fn+C will toggle turning off RGB for keys with no definition (default: RGB on)
         - Fn+V will toggle lighting the defined Fn layer keys with the static color set with FN_LAYER_COLOR (default: static color off)
 
 - All custom keycodes can be moved to different keys in VIA by using the ANY key with the following keycodes:
