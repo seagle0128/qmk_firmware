@@ -1,9 +1,9 @@
 ## seagle0128 Keychron Q1 keymap (ANSI rev_0100) v1.0.5
 
-This keymap builds on the keymap by Grayson Carr (gtg465x) but adds a couple options.
+This keymap builds on the keymap by Mike Killewald (mikekillewald) and Grayson Carr (gtg465x), and support EC11 rotary encoder.
 
 ## Features:
-- Support rotary encoder (EC11)
+- Support EC11 rotary encoder
 - On macOS, F3 opens Mission Control and F4 opens Launchpad without needing to configure shortcuts in System Preferences
 - RGB lighting turns off when the computer sleeps
 - Caps Lock RGB indicator
@@ -35,7 +35,9 @@ Please make sure to save any customizations you have made in VIA to a .json file
 ## Changelog:
 
 v1.0.5 November 18, 2021
-- support rotary encoder (EC11). Clockwise to increase the volume, and counterclockwise to decrease the volume.
+- Enable EC11 rotary encoder
+- Turn colckwise to increase volume and turn counter-colckwise to decrease volume
+- Press top right key pushbutton to mute
 
 v1.0.4  October 9, 2021
 - Caps Lock and Fn layer toggles are now stored in eeprom so settings will remain when Q1 is unplugged

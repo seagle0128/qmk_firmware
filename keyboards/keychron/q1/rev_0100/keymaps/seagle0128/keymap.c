@@ -175,7 +175,16 @@ bool get_fn_layer_color_enable(void) {
     return user_config.fn_layer_color_enable;
 }
 
+#ifdef ENCODER_ENABLE
 bool encoder_update_user(uint8_t index, bool clockwise) {
-    tap_code(clockwise ? KC_VOLU : KC_VOLD);
+    if (index == 0) {
+        if (clockwise) {
+            tap_code_delay(KC_VOLU, 10);
+        } else {
+            tap_code_delay(KC_VOLD, 10);
+        }
+    }
+
     return false;
 }
+#endif
