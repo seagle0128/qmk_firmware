@@ -9,7 +9,7 @@ This keymap builds on the keymap by Mike Killewald (mikekillewald) and Grayson C
 - Caps Lock RGB indicator
     - the Caps Lock key will light when Caps Lock is enabled with the following options:
         - #define CAPS_LOCK_INDICATOR_COLOR [color] in config.h to set the backlight color used for the indicator when Caps Lock is enabled (default: red)
-        - Fn+Z will toggle lighting the TAB key when Caps Lock is enabled. This is useful with non backlit keycaps/legends. (default: off)
+        - Fn+Z will toggle lighting the TAB key when Caps Lock is enabled. This is useful with non backlit keycaps/legends. (default: on)
         - Fn+X will toggle lighting all the alpha keys when Caps Lock is enabled. (default: off)
 
 - Dynamic Fn layer RGB indicator
