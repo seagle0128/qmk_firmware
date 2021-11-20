@@ -1,9 +1,17 @@
 ## seagle0128 Keychron Q1 keymap (ANSI rev_0100) v1.0.5
 
-This keymap builds on the keymap by Mike Killewald (mikekillewald) and Grayson Carr (gtg465x), and support EC11 rotary encoder.
+This keymap builds on the keymap by Mike Killewald (mikekillewald), and support EC11 rotary encoder.
 
 ## Features:
 - Support EC11 rotary encoder
+  - Default:  Volume Up/Down
+  - Shift:    Mouse Wheel Down/Up
+  - Ctrl:     Page Down/Up
+  - Alt:      Zoom In/Out. Push button to reset
+  - RGB indicator:
+        - Fn+B will toggle mute or play/stop. (default: mute)
+        - Applicable for the browsers and some applications, but not all.
+
 - On macOS, F3 opens Mission Control and F4 opens Launchpad without needing to configure shortcuts in System Preferences
 - RGB lighting turns off when the computer sleeps
 - Caps Lock RGB indicator
@@ -18,10 +26,6 @@ This keymap builds on the keymap by Mike Killewald (mikekillewald) and Grayson C
         - Fn+C will toggle turning off RGB for keys with no definition (default: RGB on)
         - Fn+V will toggle lighting the defined Fn layer keys with the static color set with FN_LAYER_COLOR (default: static color off)
 
-- Rotary Encoder RGB indicator
-    - Fn+B will toggle adjusting volume or zooming in/out. (default: volume)
-    - Applicable for the browsers and some applications, but not all.
-
 - All custom keycodes can be moved to different keys in VIA by using the ANY key with the following keycodes:
     - USER00 (default: F3) macOS Mission Control
     - USER01 (default: F4) macOS Launchpad
@@ -29,7 +33,7 @@ This keymap builds on the keymap by Mike Killewald (mikekillewald) and Grayson C
     - USER03 (default: Fn+X) Caps Lock light alphas toggle
     - USER04 (default: Fn+C) Fn layer non-defined keys RGB toggle
     - USER05 (default: Fn+V) Fn layer defined keys static color toggle
-    - USER06 (default: Fn+B) Rotary encoder volume/zoom toggle
+    - USER06 (default: Fn+B) Rotary encoder mute/play toggle
 
 RGB must be toggled on for all indicators to function. If you do not want an RGB mode active but still want the indicators, toggle RGB on and turn the brightness all the way off. The indicators will remain at full brightness.
 
@@ -39,31 +43,12 @@ Please make sure to save any customizations you have made in VIA to a .json file
 
 ## Changelog:
 
-v1.0.6 November 20, 2021
-- Rotary Encoder RGB indicator: toggle adjusting volume or zooming in/out
-- Optimize TAP_CODE_DELAY
+v1.0.1 November 21, 2021
+- More functionalities with modifers for the rotary encoder.
+- RGB indicator for toggling mute or play/stop
 
-v1.0.5 November 18, 2021
+v1.0.0 November 18, 2021
+- Initial release built upon keymap by Mike Killewald (mikekillewald)
 - Enable EC11 rotary encoder
 - Turn colckwise to increase volume and turn counter-colckwise to decrease volume
 - Press top right key pushbutton to mute
-
-v1.0.4  October 9, 2021
-- Caps Lock and Fn layer toggles are now stored in eeprom so settings will remain when Q1 is unplugged
-
-v1.0.3  October 8, 2021
-- now using keycode toggles instead of preprocessor directive to set the various Caps Lock and Fn Layer RGB lighting options. This allows for setting the options from user space without having to recompile.
-
-v1.0.2  October 7, 2021
-- adapted Grayson Carr's (gtg465x) Caps Lock alphas and dynamic Fn layer RGB routines
-- added CAPS_LOCK_INDICATOR_LIGHT_TAB config option to enable/disable lighting Tab with Caps Lock indicator
-- added FN_LAYER_COLOR config option to set FN layer static color
-
-v1.0.1  October 7, 2021
-- Mission Control and Launchpad custom keycodes are now defined using the VIA user keycodes range so thay can be labeled properly in VIA (adopted change from gtg465x)
-
-v1.0.0  September 30, 2021
-- Initial release built upon keymap by Grayson Carr (gtg465x)
-- defined Mission Control (F3) and Launchpad (F4) keycodes for macOs
-- RGB backlight turns off when computer sleeps
-- added Caps Lock indicator lighting both the Caps Lock and Tab LEDs for better effect on non-backlit keycaps

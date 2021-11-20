@@ -31,4 +31,4 @@ bool get_caps_lock_light_tab(void);
 bool get_caps_lock_light_alphas(void);
 bool get_fn_layer_transparent_keys_off(void);
 bool get_fn_layer_color_enable(void);
-bool get_rotary_encoder_volume(void);
+bool get_rotary_encoder_play(void);

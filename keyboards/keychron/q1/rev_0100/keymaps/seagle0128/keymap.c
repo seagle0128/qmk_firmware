@@ -29,7 +29,7 @@ typedef union {
     bool caps_lock_light_alphas :1;
     bool fn_layer_transparent_keys_off :1;
     bool fn_layer_color_enable :1;
-    bool rotary_encoder_volume :1;
+      bool rotary_encoder_play :1;
   };
 } user_config_t;
 
@@ -46,7 +46,7 @@ enum custom_keycodes {
     KC_LIGHT_ALPHAS_TOGGLE,
     KC_FN_LAYER_TRANSPARENT_KEYS_TOGGLE,
     KC_FN_LAYER_COLOR_TOGGLE,
-    KC_ROTARY_ENCODER_VOLUME
+    KC_ROTARY_ENCODER_BUTTON
 };
 
 #define KC_MCTL KC_MISSION_CONTROL
@@ -57,7 +57,7 @@ enum custom_keycodes {
 #define KC_FCTOG KC_FN_LAYER_COLOR_TOGGLE
 #define KC_TASK LGUI(KC_TAB)
 #define KC_FLXP LGUI(KC_E)
-#define KC_REV KC_ROTARY_ENCODER_VOLUME
+#define KC_REB KC_ROTARY_ENCODER_BUTTON
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -74,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,
      RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,
      KC_TRNS,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,            KC_TRNS,
-     KC_TRNS,            KC_LTTOG, KC_LATOG, KC_TKTOG, KC_FCTOG, KC_REV,   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,  KC_TRNS,
+     KC_TRNS,            KC_LTTOG, KC_LATOG, KC_TKTOG, KC_FCTOG, KC_REB,   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,  KC_TRNS,
      KC_TRNS,  KC_TRNS,  KC_TRNS,                                KC_TRNS,                                KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS),
 
 [WIN_BASE] = LAYOUT_ansi_82(
@@ -90,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,
      RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,
      KC_TRNS,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,            KC_TRNS,
-     KC_TRNS,            KC_LTTOG, KC_LATOG, KC_TKTOG, KC_FCTOG, KC_REV,   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,  KC_TRNS,
+     KC_TRNS,            KC_LTTOG, KC_LATOG, KC_TKTOG, KC_FCTOG, KC_REB,   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,  KC_TRNS,
      KC_TRNS,  KC_TRNS,  KC_TRNS,                                KC_TRNS,                                KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS)
 
 };
@@ -113,7 +113,7 @@ void eeconfig_init_user(void) {
     user_config.caps_lock_light_alphas = true;
     user_config.fn_layer_transparent_keys_off = true;
     user_config.fn_layer_color_enable = false;
-    user_config.rotary_encoder_volume = true;
+    user_config.rotary_encoder_play = false;
     eeconfig_update_user(user_config.raw);
 }
 
@@ -157,27 +157,37 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 eeconfig_update_user(user_config.raw);
             }
             return false;  // Skip all further processing of this key
-        case KC_ROTARY_ENCODER_VOLUME:
+        case KC_ROTARY_ENCODER_BUTTON:
             if (record->event.pressed) {
-                user_config.rotary_encoder_volume ^= 1;
+                user_config.rotary_encoder_play ^= 1;
                 eeconfig_update_user(user_config.raw);
             }
             return false;  // Skip all further processing of this key
         case KC_MUTE:
             if (record->event.pressed) {
-                if (!get_rotary_encoder_volume()) {
+                if (get_rotary_encoder_play()) {
+                    // Play/Stop
+                    register_code(KC_MPLY);
+                    return false;  // Skip all further processing of this key
+                } else if (get_mods() & MOD_MASK_ALT) {
+                    uint8_t mod_state = get_mods();
+                    unregister_mods(MOD_MASK_ALT);
+
+                    // Reset zoom
                     uint8_t current_layer = get_highest_layer(layer_state);
                     switch (current_layer) {
                     case MAC_BASE:
-                        SEND_STRING(SS_LGUI("0"));  // Reset zoom
+                        SEND_STRING(SS_LGUI("0"));
                     case WIN_BASE:
-                        SEND_STRING(SS_LCTL("0"));  // Reset zoom
+                        SEND_STRING(SS_LCTL("0"));
                         break;
                     default:
                         break;
                     }
-                    return false;  // Skip all further processing of this key
-                }
+
+                    set_mods(mod_state);
+                        return false;
+                    }
             }
             return true;  // Process the keycode normally
     default:
@@ -201,29 +211,47 @@ bool get_fn_layer_color_enable(void) {
     return user_config.fn_layer_color_enable;
 }
 
-bool get_rotary_encoder_volume(void) {
-    return user_config.rotary_encoder_volume;
+bool get_rotary_encoder_play(void) {
+    return user_config.rotary_encoder_play;
 }
 
 #ifdef ENCODER_ENABLE
 bool encoder_update_user(uint8_t index, bool clockwise) {
-    if (index == 0) {
-        if (get_rotary_encoder_volume()) {
-            tap_code_delay(clockwise ? KC_VOLU : KC_VOLD, 10);
-        } else {
-            uint8_t current_layer = get_highest_layer(layer_state);
-            switch (current_layer) {
-            case MAC_BASE:
-                tap_code16(clockwise ? LGUI(KC_EQL) : LGUI(KC_MINS));
-            case WIN_BASE:
-                tap_code16(clockwise ? LCTL(KC_EQL) : LCTL(KC_MINS));
-                break;
-            default:
-                break;
-            }
+    // https://beta.docs.qmk.fm/using-qmk/simple-keycodes/feature_advanced_keycodes#alt-escape-for-alt-tab-id-alt-escape-for-alt-tab
+    if (get_mods() & MOD_MASK_CTRL) {   // If CTRL is held
+        uint8_t mod_state = get_mods(); // Store all  modifiers that are held
+        unregister_mods(MOD_MASK_CTRL); // Immediately unregister the CRTL key (don't send CTRL-PgDn) - del_mods doesn't work here (not immediate)
+        tap_code(clockwise ? KC_PGDN : KC_PGUP);
+        set_mods(mod_state); // Add back in the CTRL key - so ctrl-key will work if ctrl was never released after paging.
+    } else if (get_mods() & MOD_MASK_SHIFT) {
+        uint8_t mod_state = get_mods();
+        unregister_mods(MOD_MASK_SHIFT);
+#ifdef MOUSEKEY_ENABLE   // If using the mouse scroll - make sure MOUSEKEY is enabled
+        tap_code(clockwise ? KC_MS_WH_DOWN : KC_MS_WH_UP);
+#else
+        tap_code(clockwise ? KC_VOLU : KC_VOLD);
+#endif
+    set_mods(mod_state);
+    } else if (get_mods() & MOD_MASK_ALT) {
+        uint8_t mod_state = get_mods();
+        unregister_mods(MOD_MASK_ALT);
+
+        uint8_t current_layer = get_highest_layer(layer_state);
+        switch (current_layer) {
+        case MAC_BASE:
+            tap_code16(clockwise ? LGUI(KC_EQL) : LGUI(KC_MINS));
+        case WIN_BASE:
+            tap_code16(clockwise ? LCTL(KC_EQL) : LCTL(KC_MINS));
+            break;
+        default:
+            break;
         }
+
+        set_mods(mod_state);
+    } else {
+        tap_code(clockwise ? KC_VOLU : KC_VOLD);
     }
 
-    return false;
+    return true;
 }
 #endif
