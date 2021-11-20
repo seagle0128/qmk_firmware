@@ -30,4 +30,4 @@
 #    define ENCODER_RESOLUTION 4
 #endif
 
-#define TAP_CODE_DELAY 10
+#define TAP_CODE_DELAY 0

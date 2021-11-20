@@ -209,7 +209,7 @@ bool get_rotary_encoder_volume(void) {
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
         if (get_rotary_encoder_volume()) {
-            tap_code(clockwise ? KC_VOLU : KC_VOLD);
+            tap_code_delay(clockwise ? KC_VOLU : KC_VOLD, 10);
         } else {
             uint8_t current_layer = get_highest_layer(layer_state);
             switch (current_layer) {
