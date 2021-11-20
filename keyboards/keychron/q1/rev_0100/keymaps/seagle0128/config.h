@@ -29,3 +29,5 @@
 #    define ENCODERS_PAD_B { E6 }
 #    define ENCODER_RESOLUTION 4
 #endif
+
+#define TAP_CODE_DELAY 10

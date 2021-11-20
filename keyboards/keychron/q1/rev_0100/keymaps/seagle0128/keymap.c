@@ -29,7 +29,7 @@ typedef union {
     bool caps_lock_light_alphas :1;
     bool fn_layer_transparent_keys_off :1;
     bool fn_layer_color_enable :1;
-
+    bool rotary_encoder_volume :1;
   };
 } user_config_t;
 
@@ -45,7 +45,8 @@ enum custom_keycodes {
     KC_LIGHT_TAB_TOGGLE,
     KC_LIGHT_ALPHAS_TOGGLE,
     KC_FN_LAYER_TRANSPARENT_KEYS_TOGGLE,
-    KC_FN_LAYER_COLOR_TOGGLE
+    KC_FN_LAYER_COLOR_TOGGLE,
+    KC_ROTARY_ENCODER_VOLUME
 };
 
 #define KC_MCTL KC_MISSION_CONTROL
@@ -56,6 +57,7 @@ enum custom_keycodes {
 #define KC_FCTOG KC_FN_LAYER_COLOR_TOGGLE
 #define KC_TASK LGUI(KC_TAB)
 #define KC_FLXP LGUI(KC_E)
+#define KC_REV KC_ROTARY_ENCODER_VOLUME
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -72,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,
      RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,
      KC_TRNS,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,            KC_TRNS,
-     KC_TRNS,            KC_LTTOG, KC_LATOG, KC_TKTOG, KC_FCTOG, KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,  KC_TRNS,
+     KC_TRNS,            KC_LTTOG, KC_LATOG, KC_TKTOG, KC_FCTOG, KC_REV,   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,  KC_TRNS,
      KC_TRNS,  KC_TRNS,  KC_TRNS,                                KC_TRNS,                                KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS),
 
 [WIN_BASE] = LAYOUT_ansi_82(
@@ -88,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,
      RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,
      KC_TRNS,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,            KC_TRNS,
-     KC_TRNS,            KC_LTTOG, KC_LATOG, KC_TKTOG, KC_FCTOG, KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,  KC_TRNS,
+     KC_TRNS,            KC_LTTOG, KC_LATOG, KC_TKTOG, KC_FCTOG, KC_REV,   KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,  KC_TRNS,
      KC_TRNS,  KC_TRNS,  KC_TRNS,                                KC_TRNS,                                KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS)
 
 };
@@ -111,6 +113,7 @@ void eeconfig_init_user(void) {
     user_config.caps_lock_light_alphas = true;
     user_config.fn_layer_transparent_keys_off = true;
     user_config.fn_layer_color_enable = false;
+    user_config.rotary_encoder_volume = true;
     eeconfig_update_user(user_config.raw);
 }
 
@@ -154,8 +157,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 eeconfig_update_user(user_config.raw);
             }
             return false;  // Skip all further processing of this key
-        default:
-            return true;  // Process all other keycodes normally
+        case KC_ROTARY_ENCODER_VOLUME:
+            if (record->event.pressed) {
+                user_config.rotary_encoder_volume ^= 1;
+                eeconfig_update_user(user_config.raw);
+            }
+            return false;  // Skip all further processing of this key
+        case KC_MUTE:
+            if (record->event.pressed) {
+                if (!get_rotary_encoder_volume()) {
+                    uint8_t current_layer = get_highest_layer(layer_state);
+                    switch (current_layer) {
+                    case MAC_BASE:
+                        SEND_STRING(SS_LGUI("0"));  // Reset zoom
+                    case WIN_BASE:
+                        SEND_STRING(SS_LCTL("0"));  // Reset zoom
+                        break;
+                    default:
+                        break;
+                    }
+                    return false;  // Skip all further processing of this key
+                }
+            }
+            return true;  // Process the keycode normally
+    default:
+        return true;  // Process all other keycodes normally
     }
 }
 
@@ -175,13 +201,26 @@ bool get_fn_layer_color_enable(void) {
     return user_config.fn_layer_color_enable;
 }
 
+bool get_rotary_encoder_volume(void) {
+    return user_config.rotary_encoder_volume;
+}
+
 #ifdef ENCODER_ENABLE
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
-        if (clockwise) {
-            tap_code_delay(KC_VOLU, 10);
+        if (get_rotary_encoder_volume()) {
+            tap_code(clockwise ? KC_VOLU : KC_VOLD);
         } else {
-            tap_code_delay(KC_VOLD, 10);
+            uint8_t current_layer = get_highest_layer(layer_state);
+            switch (current_layer) {
+            case MAC_BASE:
+                tap_code16(clockwise ? LGUI(KC_EQL) : LGUI(KC_MINS));
+            case WIN_BASE:
+                tap_code16(clockwise ? LCTL(KC_EQL) : LCTL(KC_MINS));
+                break;
+            default:
+                break;
+            }
         }
     }
 

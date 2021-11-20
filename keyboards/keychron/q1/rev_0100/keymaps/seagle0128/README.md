@@ -18,6 +18,10 @@ This keymap builds on the keymap by Mike Killewald (mikekillewald) and Grayson C
         - Fn+C will toggle turning off RGB for keys with no definition (default: RGB on)
         - Fn+V will toggle lighting the defined Fn layer keys with the static color set with FN_LAYER_COLOR (default: static color off)
 
+- Rotary Encoder RGB indicator
+    - Fn+B will toggle adjusting volume or zooming in/out. (default: volume)
+    - Applicable for the browsers and some applications, but not all.
+
 - All custom keycodes can be moved to different keys in VIA by using the ANY key with the following keycodes:
     - USER00 (default: F3) macOS Mission Control
     - USER01 (default: F4) macOS Launchpad
@@ -25,6 +29,7 @@ This keymap builds on the keymap by Mike Killewald (mikekillewald) and Grayson C
     - USER03 (default: Fn+X) Caps Lock light alphas toggle
     - USER04 (default: Fn+C) Fn layer non-defined keys RGB toggle
     - USER05 (default: Fn+V) Fn layer defined keys static color toggle
+    - USER06 (default: Fn+B) Rotary encoder volume/zoom toggle
 
 RGB must be toggled on for all indicators to function. If you do not want an RGB mode active but still want the indicators, toggle RGB on and turn the brightness all the way off. The indicators will remain at full brightness.
 
@@ -33,6 +38,10 @@ Please make sure to save any customizations you have made in VIA to a .json file
 #### USE AT YOUR OWN RISK
 
 ## Changelog:
+
+v1.0.6 November 20, 2021
+- Rotary Encoder RGB indicator: toggle adjusting volume or zooming in/out
+- Optimize TAP_CODE_DELAY
 
 v1.0.5 November 18, 2021
 - Enable EC11 rotary encoder
