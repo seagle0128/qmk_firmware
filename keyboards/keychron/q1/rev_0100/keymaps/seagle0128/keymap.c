@@ -177,17 +177,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     uint8_t current_layer = get_highest_layer(layer_state);
                     switch (current_layer) {
                     case MAC_BASE:
-                        SEND_STRING(SS_LGUI("0"));
+                        SEND_STRING(SS_LGUI(SS_TAP(X_0)));
                     case WIN_BASE:
-                        SEND_STRING(SS_LCTL("0"));
+                        SEND_STRING(SS_LCTL(SS_TAP(X_0)));
                         break;
                     default:
                         break;
                     }
 
                     set_mods(mod_state);
-                        return false;
-                    }
+                    return false;  // Skip all further processing of this key
+                }
             }
             return true;  // Process the keycode normally
     default:
