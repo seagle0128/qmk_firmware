@@ -229,12 +229,17 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 #ifdef MOUSEKEY_ENABLE   // If using the mouse scroll - make sure MOUSEKEY is enabled
         tap_code(clockwise ? KC_MS_WH_DOWN : KC_MS_WH_UP);
 #else
-        tap_code(clockwise ? KC_VOLU : KC_VOLD);
+        tap_code(clockwise ? KC_UP : KC_DOWN);
 #endif
     set_mods(mod_state);
     } else if (get_mods() & MOD_MASK_ALT) {
         uint8_t mod_state = get_mods();
         unregister_mods(MOD_MASK_ALT);
+        tap_code(clockwise ? KC_LEFT : KC_RIGHT);
+        set_mods(mod_state);
+    } else if (get_mods() & MOD_MASK_GUI) {
+        uint8_t mod_state = get_mods();
+        unregister_mods(MOD_MASK_GUI);
 
         uint8_t current_layer = get_highest_layer(layer_state);
         switch (current_layer) {
