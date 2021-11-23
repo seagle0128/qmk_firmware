@@ -7,7 +7,8 @@ This keymap builds on the keymap by Mike Killewald (mikekillewald), and support 
   - Default:  Volume Up/Down
   - Shift:    Mouse Wheel Down/Up
   - Ctrl:     Page Down/Up
-  - Alt:      Zoom In/Out. Push button to reset
+  - Alt:      Left/Right
+  - Win/Cmd:  Zoom In/Out. Push button to reset
   - RGB indicator:
         - Fn+B will toggle mute or play/stop. (default: mute)
         - Applicable for the browsers and some applications, but not all.
@@ -43,8 +44,12 @@ Please make sure to save any customizations you have made in VIA to a .json file
 
 ## Changelog:
 
+v1.0.2 November 23, 2021
+- New via.json to support customized keycodes in VIA
+- Enable Win/Cmd modifier for the rotary encoder
+
 v1.0.1 November 21, 2021
-- More functionalities with modifers for the rotary encoder.
+- More functionalities with modifers for the rotary encoder
 - RGB indicator for toggling mute or play/stop
 
 v1.0.0 November 18, 2021
