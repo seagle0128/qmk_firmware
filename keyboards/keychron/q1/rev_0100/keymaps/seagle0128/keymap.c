@@ -169,9 +169,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     // Play/Stop
                     register_code(KC_MPLY);
                     return false;  // Skip all further processing of this key
-                } else if (get_mods() & MOD_MASK_ALT) {
+                } else if (get_mods() & MOD_MASK_GUI) {
                     uint8_t mod_state = get_mods();
-                    unregister_mods(MOD_MASK_ALT);
+                    unregister_mods(MOD_MASK_GUI);
 
                     // Reset zoom
                     uint8_t current_layer = get_highest_layer(layer_state);
