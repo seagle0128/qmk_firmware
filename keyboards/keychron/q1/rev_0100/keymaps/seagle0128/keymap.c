@@ -235,7 +235,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     } else if (get_mods() & MOD_MASK_ALT) {
         uint8_t mod_state = get_mods();
         unregister_mods(MOD_MASK_ALT);
-        tap_code(clockwise ? KC_LEFT : KC_RIGHT);
+        tap_code(clockwise ? KC_RIGHT : KC_LEFT);
         set_mods(mod_state);
     } else if (get_mods() & MOD_MASK_GUI) {
         uint8_t mod_state = get_mods();
