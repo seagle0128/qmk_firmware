@@ -44,6 +44,10 @@ Please make sure to save any customizations you have made in VIA to a .json file
 
 ## Changelog:
 
+v1.0.3 November 27, 2021
+- Enter bootloader mode for flashing via "Ctrl+Shift+ALt+Win+R"
+- Enable Alt modifier for the rotary encoder
+
 v1.0.2 November 23, 2021
 - New via.json to support customized keycodes in VIA
 - Enable Win/Cmd modifier for the rotary encoder

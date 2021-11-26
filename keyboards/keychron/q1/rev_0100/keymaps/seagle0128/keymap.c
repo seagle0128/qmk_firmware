@@ -190,6 +190,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return true;  // Process the keycode normally
+        case KC_R:
+            if ((get_mods() & MOD_MASK_CTRL) && (get_mods() & MOD_MASK_SHIFT) &&
+                (get_mods() & MOD_MASK_ALT) && (get_mods() & MOD_MASK_GUI)) {
+                reset_keyboard();
+                return false;  // Skip all further processing of this key
+            }
+            return true;  // Process the keycode normally
     default:
         return true;  // Process all other keycodes normally
     }
