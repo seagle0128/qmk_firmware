@@ -52,6 +52,9 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             if (get_fn_layer_transparent_keys_off()) {
                 rgb_matrix_set_color_by_keycode(led_min, led_max, current_layer, is_transparent, RGB_OFF);
             }
+
+            rgb_matrix_set_color_by_keycode(led_min, led_max, current_layer, is_reset_indicator, RESET_INDICATOR_COLOR);
+
             break;
     }
 }
@@ -77,6 +80,10 @@ bool is_caps_lock_indicator(uint16_t keycode) {
     } else {
         return indicator;
     }
+}
+
+bool is_reset_indicator(uint16_t keycode) {
+    return (RESET == keycode);
 }
 
 bool is_transparent(uint16_t keycode) { return keycode == KC_TRNS; }

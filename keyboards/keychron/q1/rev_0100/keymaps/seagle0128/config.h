@@ -21,6 +21,7 @@
 #    define RGB_DISABLE_WHEN_USB_SUSPENDED
 #    define CAPS_LOCK_INDICATOR_COLOR RGB_RED
 #    define FN_LAYER_COLOR RGB_ORANGE
+#    define RESET_INDICATOR_COLOR RGB_RED
 #endif
 
 /* Encoder Configuration */

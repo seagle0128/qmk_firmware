@@ -13,7 +13,7 @@ This keymap builds on the keymap by Mike Killewald (mikekillewald), and support 
         - Fn+B will toggle mute or play/stop. (default: mute)
         - Applicable for the browsers and some applications, but not all.
 
-- Enter bootloader mode for flashing via Fn+Del. No need to pull the SPACE keycap up
+- Enter bootloader mode for flashing via Fn+Del. The RGB light is always red. No need to pull the SPACE keycap up now
 - On macOS, F3 opens Mission Control and F4 opens Launchpad without needing to configure shortcuts in System Preferences
 - RGB lighting turns off when the computer sleeps
 - Caps Lock RGB indicator
