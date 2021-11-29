@@ -165,11 +165,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;  // Skip all further processing of this key
         case KC_MUTE:
             if (record->event.pressed) {
-                if (get_rotary_encoder_play()) {
-                    // Play/Stop
-                    register_code(KC_MPLY);
-                    return false;  // Skip all further processing of this key
-                } else if (get_mods() & MOD_MASK_GUI) {
+                if ((get_mods() == MOD_BIT(KC_LGUI)) || (get_mods() == MOD_BIT(KC_RGUI))) {
                     uint8_t mod_state = get_mods();
                     unregister_mods(MOD_MASK_GUI);
 
@@ -177,15 +173,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     uint8_t current_layer = get_highest_layer(layer_state);
                     switch (current_layer) {
                     case MAC_BASE:
-                        SEND_STRING(SS_LGUI(SS_TAP(X_0)));
+                        tap_code16(G(KC_0));
                     case WIN_BASE:
-                        SEND_STRING(SS_LCTL(SS_TAP(X_0)));
+                        tap_code16(C(KC_0));
                         break;
                     default:
                         break;
                     }
 
                     set_mods(mod_state);
+                    return false;  // Skip all further processing of this key
+                } else if (get_rotary_encoder_play()) {
+                    // Play/Stop
+                    register_code(KC_MPLY);
                     return false;  // Skip all further processing of this key
                 }
             }
@@ -218,12 +218,12 @@ bool get_rotary_encoder_play(void) {
 #ifdef ENCODER_ENABLE
 bool encoder_update_user(uint8_t index, bool clockwise) {
     // https://beta.docs.qmk.fm/using-qmk/simple-keycodes/feature_advanced_keycodes#alt-escape-for-alt-tab-id-alt-escape-for-alt-tab
-    if (get_mods() & MOD_MASK_CTRL) {   // If CTRL is held
+    if ((get_mods() == MOD_BIT(KC_LCTRL)) || (get_mods() == MOD_BIT(KC_RCTRL))) {   // If CTRL is held
         uint8_t mod_state = get_mods(); // Store all  modifiers that are held
         unregister_mods(MOD_MASK_CTRL); // Immediately unregister the CRTL key (don't send CTRL-PgDn) - del_mods doesn't work here (not immediate)
         tap_code(clockwise ? KC_PGDN : KC_PGUP);
         set_mods(mod_state); // Add back in the CTRL key - so ctrl-key will work if ctrl was never released after paging.
-    } else if (get_mods() & MOD_MASK_SHIFT) {
+    } else if ((get_mods() == MOD_BIT(KC_LSHIFT)) || (get_mods() == MOD_BIT(KC_RSHIFT))) {
         uint8_t mod_state = get_mods();
         unregister_mods(MOD_MASK_SHIFT);
 #ifdef MOUSEKEY_ENABLE   // If using the mouse scroll - make sure MOUSEKEY is enabled
@@ -231,22 +231,23 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 #else
         tap_code(clockwise ? KC_UP : KC_DOWN);
 #endif
-    set_mods(mod_state);
-    } else if (get_mods() & MOD_MASK_ALT) {
+        set_mods(mod_state);
+    } else if ((get_mods() == MOD_BIT(KC_LALT)) || (get_mods() == MOD_BIT(KC_RALT))) {
         uint8_t mod_state = get_mods();
         unregister_mods(MOD_MASK_ALT);
         tap_code(clockwise ? KC_RIGHT : KC_LEFT);
         set_mods(mod_state);
-    } else if (get_mods() & MOD_MASK_GUI) {
+    } else if ((get_mods() == MOD_BIT(KC_LGUI)) || (get_mods() == MOD_BIT(KC_RGUI))) {
         uint8_t mod_state = get_mods();
         unregister_mods(MOD_MASK_GUI);
 
         uint8_t current_layer = get_highest_layer(layer_state);
         switch (current_layer) {
         case MAC_BASE:
-            tap_code16(clockwise ? LGUI(KC_EQL) : LGUI(KC_MINS));
+            tap_code16(clockwise ? G(KC_EQL) : G(KC_MINS));
+            break;
         case WIN_BASE:
-            tap_code16(clockwise ? LCTL(KC_EQL) : LCTL(KC_MINS));
+            tap_code16(clockwise ? C(KC_EQL) : C(KC_MINS));
             break;
         default:
             break;
