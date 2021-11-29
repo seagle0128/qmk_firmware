@@ -29,5 +29,5 @@
 #    define TAP_CODE_DELAY 10
 #    define ENCODERS_PAD_A { B7 }
 #    define ENCODERS_PAD_B { E6 }
-#    define ENCODER_RESOLUTION 4
+#    define ENCODER_RESOLUTION 2
 #endif
