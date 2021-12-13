@@ -174,6 +174,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     switch (current_layer) {
                     case MAC_BASE:
                         tap_code16(G(KC_0));
+                        break;
                     case WIN_BASE:
                         tap_code16(C(KC_0));
                         break;
