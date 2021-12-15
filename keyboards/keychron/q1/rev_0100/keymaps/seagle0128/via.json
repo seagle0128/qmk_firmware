@@ -36,6 +36,11 @@
       "shortName": "FnCol"
     },
     {
+      "name": "Rotary Encoder",
+      "title": "Adjust volume or screen brightness",
+      "shortName": "RoEn"
+    },
+    {
       "name": "Rotary Encoder Button",
       "title": "Toggle the rotary encoder button: mute or play",
       "shortName": "EnBtn"
