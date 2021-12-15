@@ -1,5 +1,5 @@
 VIA_ENABLE = yes
-MOUSEKEY_ENABLE = yes
+MOUSEKEY_ENABLE = no
 ENCODER_ENABLE = yes
 
 ifeq ($(strip $(RGB_MATRIX_ENABLE)), yes)

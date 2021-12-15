@@ -5,14 +5,13 @@ This keymap builds on the keymap by Mike Killewald (mikekillewald), and support 
 ## Features:
 - Support EC11 rotary encoder
   - Default:  Volume Up/Down
-  - Shift:    Mouse Wheel Down/Up
+  - Shift:    Down/Up
   - Ctrl:     Page Down/Up
   - Alt:      Left/Right
   - Win/Cmd:  Zoom In/Out. Push button to reset
   - RGB indicator:
-        - Fn+B will toggle mute or play/stop. (default: mute)
-        - Applicable for the browsers and some applications, but not all.
-
+    - Fn+B will toggle mute or play/stop. (default: mute)
+    - Applicable for the browsers and some applications.
 - Enter bootloader mode for flashing via Fn+Del. The RGB light is always red. No need to pull the SPACE keycap up now
 - On macOS, F3 opens Mission Control and F4 opens Launchpad without needing to configure shortcuts in System Preferences
 - RGB lighting turns off when the computer sleeps
@@ -45,8 +44,12 @@ Please make sure to save any customizations you have made in VIA to a .json file
 
 ## Changelog:
 
+v1.0.4 December 15, 2021
+- Disable mousekey
+- Add more RGB effects.
+
 v1.0.3 November 27, 2021
-- Enter bootloader mode for flashing via Fn+Del.
+- Enter bootloader mode for flashing via Fn+Del
 - Enable Alt modifier for the rotary encoder
 
 v1.0.2 November 23, 2021
