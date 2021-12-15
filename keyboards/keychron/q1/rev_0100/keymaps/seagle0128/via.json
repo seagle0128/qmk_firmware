@@ -44,6 +44,11 @@
       "name": "Rotary Encoder Button",
       "title": "Toggle the rotary encoder button: mute or play",
       "shortName": "EnBtn"
+    },
+    {
+      "name": "Mute/Play",
+      "title": "Mute/Play",
+      "shortName": "MutPly"
     }
   ],
   "layouts": {
