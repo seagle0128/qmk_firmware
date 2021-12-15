@@ -8,10 +8,8 @@ This keymap builds on the keymap by Mike Killewald (mikekillewald), and support 
   - Shift:    Down/Up
   - Ctrl:     Page Down/Up
   - Alt:      Left/Right
-  - Win/Cmd:  Zoom In/Out. Push button to reset
-  - RGB indicator:
-    - Fn+B will toggle mute or play/stop. (default: mute)
-    - Applicable for the browsers and some applications.
+  - Win/Cmd:  Zoom In/Out. Push button to reset. Applicable for the browsers and some applications
+  - Fn+B will toggle adjusting volume or screen brightness. (default: screen)
 - Enter bootloader mode for flashing via Fn+Del. The RGB light is always red. No need to pull the SPACE keycap up now
 - On macOS, F3 opens Mission Control and F4 opens Launchpad without needing to configure shortcuts in System Preferences
 - RGB lighting turns off when the computer sleeps
@@ -34,7 +32,7 @@ This keymap builds on the keymap by Mike Killewald (mikekillewald), and support 
     - USER03 (default: Fn+X) Caps Lock light alphas toggle
     - USER04 (default: Fn+C) Fn layer non-defined keys RGB toggle
     - USER05 (default: Fn+V) Fn layer defined keys static color toggle
-    - USER06 (default: Fn+B) Rotary encoder mute/play toggle
+    - USER06 (default: Fn+B) Rotary encoder volume/screen brightness toggle
 
 RGB must be toggled on for all indicators to function. If you do not want an RGB mode active but still want the indicators, toggle RGB on and turn the brightness all the way off. The indicators will remain at full brightness.
 
@@ -46,7 +44,8 @@ Please make sure to save any customizations you have made in VIA to a .json file
 
 v1.0.4 December 15, 2021
 - Disable mousekey
-- Add more RGB effects.
+- Add more RGB effects
+- Adjust screen brightness via rotary encoder
 
 v1.0.3 November 27, 2021
 - Enter bootloader mode for flashing via Fn+Del

@@ -29,7 +29,7 @@ typedef union {
     bool caps_lock_light_alphas :1;
     bool fn_layer_transparent_keys_off :1;
     bool fn_layer_color_enable :1;
-    bool rotary_encoder_play :1;
+    bool rotary_encoder_button :1;
   };
 } user_config_t;
 
@@ -70,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_LCTL,  KC_LALT,  KC_LGUI,                                KC_SPC,                                 KC_RGUI, MO(MAC_FN),KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT),
 
 [MAC_FN] = LAYOUT_ansi_82(
-     KC_TRNS,            KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,   RESET,    KC_TRNS,
+     KC_TRNS,            KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,   RESET,    KC_MPLY,
      KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,
      RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,
      KC_TRNS,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,            KC_TRNS,
@@ -86,7 +86,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_LCTL,  KC_LGUI,  KC_LALT,                                KC_SPC,                                 KC_RALT, MO(WIN_FN),KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT),
 
 [WIN_FN] = LAYOUT_ansi_82(
-     KC_TRNS,            KC_BRID,  KC_BRIU,  KC_TASK,  KC_FLXP,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,  RESET,    KC_TRNS,
+     KC_TRNS,            KC_BRID,  KC_BRIU,  KC_TASK,  KC_FLXP,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,  RESET,    KC_MPLY,
      KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,
      RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,
      KC_TRNS,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,            KC_TRNS,            KC_TRNS,
@@ -113,7 +113,7 @@ void eeconfig_init_user(void) {
     user_config.caps_lock_light_alphas = true;
     user_config.fn_layer_transparent_keys_off = true;
     user_config.fn_layer_color_enable = false;
-    user_config.rotary_encoder_play = false;
+    user_config.rotary_encoder_button = false;
     eeconfig_update_user(user_config.raw);
 }
 
@@ -159,7 +159,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;  // Skip all further processing of this key
         case KC_ROTARY_ENCODER_BUTTON:
             if (record->event.pressed) {
-                user_config.rotary_encoder_play ^= 1;
+                user_config.rotary_encoder_button ^= 1;
                 eeconfig_update_user(user_config.raw);
             }
             return false;  // Skip all further processing of this key
@@ -183,10 +183,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     }
 
                     set_mods(mod_state);
-                    return false;  // Skip all further processing of this key
-                } else if (get_rotary_encoder_play()) {
-                    // Play/Stop
-                    register_code(KC_MPLY);
                     return false;  // Skip all further processing of this key
                 }
             }
@@ -212,8 +208,8 @@ bool get_fn_layer_color_enable(void) {
     return user_config.fn_layer_color_enable;
 }
 
-bool get_rotary_encoder_play(void) {
-    return user_config.rotary_encoder_play;
+bool get_rotary_encoder_button(void) {
+    return user_config.rotary_encoder_button;
 }
 
 #ifdef ENCODER_ENABLE
@@ -255,7 +251,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         }
 
         set_mods(mod_state);
-    } else {
+    } else if (get_rotary_encoder_button()) {
+        tap_code(clockwise ? KC_BRIU : KC_BRID);
+    }else {
         tap_code(clockwise ? KC_VOLU : KC_VOLD);
     }
 
