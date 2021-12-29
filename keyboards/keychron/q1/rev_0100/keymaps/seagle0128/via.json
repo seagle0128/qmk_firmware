@@ -47,7 +47,7 @@
     },
     {
       "name": "Mute/Play",
-      "title": "Mute/Play",
+      "title": "Push encoder button: Mute/Unmute or Play/Stop",
       "shortName": "MutPly"
     }
   ],

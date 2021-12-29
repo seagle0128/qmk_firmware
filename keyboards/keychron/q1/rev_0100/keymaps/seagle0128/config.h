@@ -27,9 +27,8 @@
 /* Encoder Configuration */
 #ifdef ENCODER_ENABLE
 #    define TAP_CODE_DELAY 10
-#    define ENCODERS_PAD_A { B7 }
-#    define ENCODERS_PAD_B { E6 }
-#    define ENCODER_DIRECTION_FLIP
+#    define ENCODERS_PAD_A { E6 }
+#    define ENCODERS_PAD_B { B7 }
 #    define ENCODER_RESOLUTION 2
 #endif
 
