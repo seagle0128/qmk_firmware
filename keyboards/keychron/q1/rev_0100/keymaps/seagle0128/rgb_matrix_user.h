@@ -22,5 +22,6 @@ void rgb_matrix_set_color_by_keycode(uint8_t led_min, uint8_t led_max, uint8_t l
 
 bool is_caps_lock_indicator(uint16_t keycode);
 bool is_reset_indicator(uint16_t keycode);
+bool is_encoder_indicator(uint16_t keycode);
 bool is_transparent(uint16_t keycode);
 bool is_not_transparent(uint16_t keycode);
