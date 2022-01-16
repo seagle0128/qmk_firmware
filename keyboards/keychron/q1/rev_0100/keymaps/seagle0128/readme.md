@@ -22,7 +22,7 @@ This keymap builds on the keymap by Mike Killewald (mikekillewald), and support 
 
 - Dynamic Fn layer RGB indicator
     - When the Fn key is held down, any keys defined on the Fn layer in this firmware or in VIA will be highlighted with the following options:
-        - #define FN_LAYER_COLOR [color] in config.h to set a static color for defined keys (default: orange)
+        - #define FN_LAYER_COLOR [color] in config.h to set a static color for defined keys (default: cyan)
         - Fn+C will toggle turning off RGB for keys with no definition (default: RGB on)
         - Fn+V will toggle lighting the defined Fn layer keys with the static color set with FN_LAYER_COLOR (default: static color off)
 
@@ -43,6 +43,10 @@ Please make sure to save any customizations you have made in VIA to a .json file
 #### USE AT YOUR OWN RISK
 
 ## Changelog:
+
+v1.0.5 January 16, 2022
+- Disable encoder indicator
+- Change Fn layer color
 
 v1.0.4 December 15, 2021
 - Disable mousekey
