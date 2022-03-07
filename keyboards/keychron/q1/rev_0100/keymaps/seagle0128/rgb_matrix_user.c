@@ -87,6 +87,6 @@ bool is_caps_lock_indicator(uint16_t keycode) {
 }
 
 bool is_reset_indicator(uint16_t keycode) { return (RESET == keycode);}
-bool is_encoder_indicator(uint16_t keycode) { return (KC_REB == keycode);}
+bool is_encoder_indicator(uint16_t keycode) { return (KC_MUTE == keycode);}
 bool is_transparent(uint16_t keycode) { return keycode == KC_TRNS; }
 bool is_not_transparent(uint16_t keycode) { return keycode != KC_TRNS; }
