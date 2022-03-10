@@ -48,6 +48,7 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 #ifdef FN_LAYER_COLOR
         rgb_matrix_set_color_by_keycode(led_min, led_max, current_layer, is_not_transparent, FN_LAYER_COLOR);
 #endif
+        rgb_matrix_set_color_by_keycode(led_min, led_max, current_layer, is_transparent, RGB_OFF);
 
 #ifdef RESET_INDICATOR_COLOR
         rgb_matrix_set_color_by_keycode(led_min, led_max, current_layer, is_reset_indicator, RESET_INDICATOR_COLOR);
