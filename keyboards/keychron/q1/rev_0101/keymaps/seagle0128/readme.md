@@ -10,6 +10,7 @@
     - Alt:      Left/Right
     - Win/Cmd:  Zoom In/Out. Push button to reset. Applicable for the browsers and some applications
 - Enter bootloader mode for flashing via `Fn+Del`. The RGB light is always red. No need to pull the SPACE keycap up now
+- Allow to configure RGB lighting in VIA.
 - On macOS, `F3` opens Mission Control and `F4` opens Launchpad without needing to configure shortcuts in System Preferences
 - Toggle N-Key Rollover (NKRO) via `Fn+Y`. On macOS, turning it off is able to address the conflict issue between Caps lock and input methods switching.
 - RGB lighting turns off when the computer sleeps
