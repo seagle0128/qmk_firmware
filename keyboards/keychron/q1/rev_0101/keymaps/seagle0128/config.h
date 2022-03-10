@@ -27,6 +27,7 @@
 #define TAP_CODE_DELAY 10
 #undef ENCODER_RESOLUTION
 #define ENCODER_RESOLUTION 2
+/* #define ENCODER_DIRECTION_FLIP */
 
 // RGB Matrix Animation modes. Explicitly enabled
 #define ENABLE_RGB_MATRIX_BAND_SAT
