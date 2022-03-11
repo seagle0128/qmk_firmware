@@ -41,7 +41,6 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             rgb_matrix_set_color_by_keycode(led_min, led_max, current_layer, is_caps_lock_indicator, CAPS_LOCK_INDICATOR_COLOR);
         }
 #endif
-        rgb_matrix_set_color_by_keycode(led_min, led_max, current_layer, is_encoder_indicator, RGB_OFF);
         break;
     case MAC_FN:
     case WIN_FN:
@@ -55,6 +54,7 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 #endif
         break;
     }
+    rgb_matrix_encoder_light_off();
 }
 
 void rgb_matrix_set_color_by_keycode(uint8_t led_min, uint8_t led_max, uint8_t layer, bool (*is_keycode)(uint16_t), uint8_t red, uint8_t green, uint8_t blue) {
@@ -66,11 +66,14 @@ void rgb_matrix_set_color_by_keycode(uint8_t led_min, uint8_t led_max, uint8_t l
     }
 }
 
+void rgb_matrix_encoder_light_off(void) {
+    rgb_matrix_set_color(14, RGB_OFF);
+}
+
 bool is_caps_lock_indicator(uint16_t keycode) {
     return (((KC_A <= keycode) && (keycode <= KC_Z)) || (keycode == KC_CAPS));
 }
 
 bool is_reset_indicator(uint16_t keycode) { return (RESET == keycode);}
-bool is_encoder_indicator(uint16_t keycode) { return (KC_MUTE == keycode);}
 bool is_transparent(uint16_t keycode) { return keycode == KC_TRNS; }
 bool is_not_transparent(uint16_t keycode) { return keycode != KC_TRNS; }

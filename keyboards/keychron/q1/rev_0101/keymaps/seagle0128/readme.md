@@ -9,6 +9,7 @@
     - Ctrl:     Page Down/Up
     - Alt:      Left/Right
     - Win/Cmd:  Zoom In/Out. Push button to reset. Applicable for the browsers and some applications
+    - No lighting for encoder indicator
 - Enter bootloader mode for flashing via `Fn+Del`. The RGB light is always red. No need to pull the SPACE keycap up now
 - Allow to configure RGB lighting in VIA.
 - On macOS, `F3` opens Mission Control and `F4` opens Launchpad without needing to configure shortcuts in System Preferences
