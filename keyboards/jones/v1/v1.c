@@ -1,4 +1,4 @@
-/* Copyright 2020 QMK
+/* Copyright 2021 Takeshi Nishio
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,20 +14,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "v1.h"
 
-#pragma once
-#include_next <halconf.h>
-
-
-#undef  SERIAL_USB_BUFFERS_SIZE
-#define SERIAL_USB_BUFFERS_SIZE 256
-
-#undef  SERIAL_BUFFERS_SIZE
-#define SERIAL_BUFFERS_SIZE     128
-
-#undef  SPI_USE_WAIT
-#define SPI_USE_WAIT TRUE
-
-#undef  SPI_SELECT_MODE
-#define SPI_SELECT_MODE SPI_SELECT_MODE_PAD
-
+#if defined(AUDIO_ENABLE) && defined(MUSIC_MAP)
+const uint8_t music_map[MATRIX_ROWS][MATRIX_COLS] = LAYOUT(
+    0,  24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37,
+      0,  12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,  24,
+      0,  12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,  24,
+    0,  0,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12,
+    0,  0,  0,  0,     0,     0,  0,     0,  0,  0,  0,  0,  0,
+  0,  0,                                                   0,  0
+);
+#endif
