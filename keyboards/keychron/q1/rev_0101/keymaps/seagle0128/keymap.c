@@ -105,12 +105,12 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     uint8_t mod_state = get_mods(); // Store all  modifiers that are held
     if ((mod_state == MOD_BIT(KC_LCTRL)) || (get_mods() == MOD_BIT(KC_RCTRL))) {   // If CTRL is held
         unregister_mods(MOD_MASK_CTRL); // Immediately unregister the CRTL key (don't send CTRL-PgDn) - del_mods doesn't work here (not immediate)
-        tap_code(clockwise ? KC_PGDN : KC_PGUP);
+        tap_code(clockwise ? KC_PGUP : KC_PGDN);
         set_mods(mod_state); // Add back in the CTRL key - so ctrl-key will work if ctrl was never released after paging.
     } else if ((mod_state == MOD_BIT(KC_LSHIFT)) || (mod_state == MOD_BIT(KC_RSHIFT))) {
         unregister_mods(MOD_MASK_SHIFT);
 #ifdef MOUSEKEY_ENABLE   // If using the mouse scroll - make sure MOUSEKEY is enabled
-        tap_code(clockwise ? KC_MS_WH_DOWN : KC_MS_WH_UP);
+        tap_code(clockwise ? KC_MS_WH_UP : KC_MS_WH_DOWN);
 #else
         tap_code(clockwise ? KC_UP : KC_DOWN);
 #endif
